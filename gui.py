@@ -1,4 +1,5 @@
 from data_base import df
+import webbrowser
 
 from tkinter import *
 from tkinter import ttk
@@ -7,7 +8,7 @@ class App:
     def __init__(self):
         self.root = Tk()
 
-        self.root.geometry('300x200')
+        self.root.geometry('325x250')
         self.root.resizable(False, False)
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
@@ -15,8 +16,28 @@ class App:
         self.root.rowconfigure(2, weight=1)
         self.root.rowconfigure(3, weight=1)
 
-        self.search = ttk.Entry(self.root)
-        self.search.grid(row=0, sticky='')
+        self.frame = Frame(self.root)
+        self.frame.grid(row=0, sticky='nsew')
+
+        self.frame.rowconfigure(0, weight=1)
+        self.frame.rowconfigure(1, weight=1)
+        self.frame.rowconfigure(2, weight=1)
+        self.frame.columnconfigure(0, weight=1)
+        self.frame.columnconfigure(1, weight=1)
+        self.frame.columnconfigure(2, weight=1)
+        self.frame.columnconfigure(3, weight=1)
+        self.frame.columnconfigure(4, weight=1)
+        self.frame.columnconfigure(5, weight=1)
+
+        self.search = ttk.Entry(self.frame)
+        #self.search.grid(row=0, sticky='')
+        self.search.grid(column=2, row=1, sticky='w', columnspan=4)
+
+        self.dropdown_menu = ttk.Combobox(self.frame, values=['in use', 'expired', 'all'], width=7)
+        self.dropdown_menu.set('in use')
+
+        #self.dropdown_menu.grid(row=0)
+        self.dropdown_menu.grid(column=0, row=1, sticky='e', columnspan=2)
 
         self.list_box = Listbox(self.root, height=5, selectmode='multiple')
         self.list_box.grid(row=1)
@@ -24,11 +45,14 @@ class App:
         self.__searching()
 
 
-        self.add_lot = Button(self.root, text='add')
-        self.add_lot.grid(row=2, sticky='s')
+        self.add_execute = Button(self.root, text='execute', command= lambda: self.__execute())
+        self.add_execute.grid(row=2, sticky='s')
+        self.add_execute.bind()
 
         self.update_list = Button(self.root, text='update')
         self.update_list.grid(row=3, sticky='n')
+
+        self.data_frame = None
 
     def __search(self):
         programmatic_modification_of_txt = StringVar()
@@ -43,14 +67,38 @@ class App:
 
     def __searching(self):
         def filter(*args):
-            query = self.search.get()
             self.list_box.delete(0, END)
-            for lot in df['standard'].unique():
-                if lot.startswith(query):
-                    self.list_box.insert(END, lot)
+            query = self.search.get()
+            selected = self.dropdown_menu.get()
+
+            self.data_frame = df
+
+            if selected == 'expired':
+                print('expired')
+                self.data_frame = df[df['expired'] == True]
+            elif selected == 'in use':
+                self.data_frame = df[df['expired'] == False]
+                print('in use')
+
+            if ',' in query:
+                query = query.split(',')
+                query = set(map(lambda s: s.strip(), query))
+                intersection = query & set(self.data_frame['standard'].unique())
+                self.list_box.insert(END, *intersection)
+            else:
+                for lot in self.data_frame['standard'].unique():
+                    if lot.startswith(query):
+                        self.list_box.insert(END, lot)
 
         self.search.bind('<Return>', filter)
         self.search.bind('<KeyRelease>', filter)
+
+    def __execute(self):
+        self.data_frame.to_csv('output.txt')
+        webbrowser.open('output.txt')
+
+        #also fix the it to updated when the comboboxchange
+
 
 
     def run(self):
