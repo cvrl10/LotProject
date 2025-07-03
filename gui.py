@@ -4,6 +4,8 @@ import webbrowser
 from tkinter import *
 from tkinter import ttk
 
+print(TkVersion)
+
 class App:
     def __init__(self):
         self.root = Tk()
@@ -36,18 +38,18 @@ class App:
         self.dropdown_menu = ttk.Combobox(self.frame, state='readonly', values=['in use', 'expired', 'all'], width=7)
         self.dropdown_menu.set('in use')
 
+
         #self.dropdown_menu.grid(row=0)
         self.dropdown_menu.grid(column=0, row=1, sticky='e', columnspan=2)
 
-        self.list_box = Listbox(self.root, height=5, selectmode='multiple')
+        self.list_box = Listbox(self.root, height=5, selectmode='multiple', exportselection=False)
         self.list_box.grid(row=1)
 
         self.__searching()
+        self.dropdown_menu.bind('<<ComboboxSelected>>', lambda _: self.search.event_generate('<Return>', when='head'))
 
-
-        self.add_execute = Button(self.root, text='execute', command= lambda: self.__execute())
+        self.add_execute = Button(self.root, text='execute', command=lambda: self.__execute())
         self.add_execute.grid(row=2, sticky='s')
-        self.add_execute.bind()
 
         self.update_list = Button(self.root, text='update')
         self.update_list.grid(row=3, sticky='n')
@@ -91,6 +93,8 @@ class App:
                 for lot in self.data_frame['standard'].unique():
                     if lot.startswith(query):
                         self.list_box.insert(END, lot)
+
+            print('I firering this event')
 
         self.search.bind('<Return>', filter)
         self.search.bind('<KeyRelease>', filter)

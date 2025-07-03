@@ -1,5 +1,2 @@
 ,standard,lot#,expiration date,expired
-2,Ni,26-77NIT,2023-07-30,True
-35,Ni,27-20NIT,2024-10-30,True
-44,NO3,1305T96,2024-11-01,True
-54,Nd,4309H55,2025-03-01,True
+56,Ammonia,BR1,2025-09-30,False
