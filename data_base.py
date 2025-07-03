@@ -36,4 +36,4 @@ def expired(expiration_date):
 
 df['expiration date'] = df['expiration date'].apply(str_to_date)
 df['expired'] = df['expiration date'].apply(expired)
-print(df.to_string())
+#print(df.to_string())

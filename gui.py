@@ -33,7 +33,7 @@ class App:
         #self.search.grid(row=0, sticky='')
         self.search.grid(column=2, row=1, sticky='w', columnspan=4)
 
-        self.dropdown_menu = ttk.Combobox(self.frame, values=['in use', 'expired', 'all'], width=7)
+        self.dropdown_menu = ttk.Combobox(self.frame, state='readonly', values=['in use', 'expired', 'all'], width=7)
         self.dropdown_menu.set('in use')
 
         #self.dropdown_menu.grid(row=0)
@@ -74,11 +74,13 @@ class App:
             self.data_frame = df
 
             if selected == 'expired':
-                print('expired')
+                #print('expired')
                 self.data_frame = df[df['expired'] == True]
+                #print(f'{self.data_frame.to_string()}\n')
             elif selected == 'in use':
                 self.data_frame = df[df['expired'] == False]
-                print('in use')
+                #print('in use')
+                #print(f'{self.data_frame.to_string()}\n')
 
             if ',' in query:
                 query = query.split(',')
@@ -94,7 +96,12 @@ class App:
         self.search.bind('<KeyRelease>', filter)
 
     def __execute(self):
-        self.data_frame.to_csv('output.txt')
+        selected_indices = self.list_box.curselection()
+        selected_lots = [self.list_box.get(i) for i in selected_indices]
+        print(selected_lots)
+        self.data_frame[self.data_frame['standard'].isin(selected_lots)].to_csv('output.txt')
+        #print('dataframe')
+        #print(self.data_frame[self.data_frame['standard'].isin(selected_lots)])
         webbrowser.open('output.txt')
 
         #also fix the it to updated when the comboboxchange
