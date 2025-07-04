@@ -1,0 +1,5 @@
+standard,lot#,expiration date
+Al,26-67ALX,2023-03-30
+Al,26-165ALX,2024-03-30
+Ammonia,BR1,2025-09-30
+Al,27-45ALY,2025-03-30
