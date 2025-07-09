@@ -1,15 +1,19 @@
-from data_base import df
+from data_base import read_data
 import webbrowser
+import subprocess
+import os
 
 from tkinter import *
 from tkinter import ttk
 
-print(TkVersion)
+df = read_data()
 
 class App:
     def __init__(self):
         self.root = Tk()
 
+        self.root.iconbitmap(os.path.abspath('img/Clariant.ico'))
+        self.root.title('lot inventory')
         self.root.geometry('325x250')
         self.root.resizable(False, False)
         self.root.columnconfigure(0, weight=1)
@@ -38,6 +42,11 @@ class App:
         self.dropdown_menu = ttk.Combobox(self.frame, state='readonly', values=['in use', 'expired', 'all'], width=7)
         self.dropdown_menu.set('in use')
 
+        #self.selected = StringVar()
+        #self.selected.set('in use')
+        #self.dropdown_menu = OptionMenu(self.frame, self.selected, *['in use', 'expired', 'all'], command=lambda _: self.search.event_generate('<Return>'))
+        #self.dropdown_menu.config(width=7)
+
 
         #self.dropdown_menu.grid(row=0)
         self.dropdown_menu.grid(column=0, row=1, sticky='e', columnspan=2)
@@ -46,12 +55,12 @@ class App:
         self.list_box.grid(row=1)
 
         self.__searching()
-        self.dropdown_menu.bind('<<ComboboxSelected>>', lambda _: self.search.event_generate('<Return>', when='head'))
+        #self.dropdown_menu.bind('<<ComboboxSelected>>', lambda _: self.search.event_generate('<Return>'))
 
         self.add_execute = Button(self.root, text='execute', command=lambda: self.__execute(), width=8)
         self.add_execute.grid(row=2, sticky='s')
 
-        self.update_list = Button(self.root, text='update', width=8)
+        self.update_list = Button(self.root, text='update', command=lambda: self.__update(), width=8)
         self.update_list.grid(row=3, sticky='n')
 
         self.data_frame = None
@@ -72,17 +81,14 @@ class App:
             self.list_box.delete(0, END)
             query = self.search.get()
             selected = self.dropdown_menu.get()
+            #selected = self.selected.get()
 
             self.data_frame = df
 
             if selected == 'expired':
-                #print('expired')
                 self.data_frame = df[df['expired'] == True]
-                #print(f'{self.data_frame.to_string()}\n')
             elif selected == 'in use':
                 self.data_frame = df[df['expired'] == False]
-                #print('in use')
-                #print(f'{self.data_frame.to_string()}\n')
 
             if ',' in query:
                 query = query.split(',')
@@ -93,8 +99,6 @@ class App:
                 for lot in self.data_frame['standard'].unique():
                     if lot.startswith(query):
                         self.list_box.insert(END, lot)
-
-            print('I firering this event')
 
         self.search.bind('<Return>', filter)
         self.search.bind('<KeyRelease>', filter)
@@ -120,9 +124,12 @@ class App:
         webbrowser.open('output.txt')
 
 
-        #also fix the it to updated when the comboboxchange
+        #I fixed the it to update when new option is selected but have to use OptionMenu.
 
-
+    def __update(self):
+        subprocess.run([r'C:\Windows\System32\notepad.exe', 'inventory.txt'])
+        global df
+        df = read_data()
 
     def run(self):
         self.root.mainloop()
