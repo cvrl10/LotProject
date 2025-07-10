@@ -9,8 +9,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_base.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory.csv" beforeDir="false" afterPath="$PROJECT_DIR$/inventory.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/inventory.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp_data_frame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/temp_data_frame.txt" afterDir="false" />
     </list>
@@ -51,7 +49,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Users\carcheme\Documents\LotProject\venv\Scripts\python.exe" />
-      <option name="SDK_NAME" value="Python 3.9 (LotProject)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />

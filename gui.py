@@ -42,12 +42,6 @@ class App:
         self.dropdown_menu = ttk.Combobox(self.frame, state='readonly', values=['in use', 'expired', 'all'], width=7)
         self.dropdown_menu.set('in use')
 
-        #self.selected = StringVar()
-        #self.selected.set('in use')
-        #self.dropdown_menu = OptionMenu(self.frame, self.selected, *['in use', 'expired', 'all'], command=lambda _: self.search.event_generate('<Return>'))
-        #self.dropdown_menu.config(width=7)
-
-
         #self.dropdown_menu.grid(row=0)
         self.dropdown_menu.grid(column=0, row=1, sticky='e', columnspan=2)
 
@@ -55,8 +49,8 @@ class App:
         self.list_box.grid(row=1)
 
         self.__searching()
-        #self.dropdown_menu.bind('<<ComboboxSelected>>', lambda _: self.search.event_generate('<Return>'))
-
+        self.dropdown_menu.bind('<<ComboboxSelected>>', lambda _: (self.search.focus_set(), self.search.event_generate('<Return>')))
+        #s
         self.add_execute = Button(self.root, text='execute', command=lambda: self.__execute(), width=8)
         self.add_execute.grid(row=2, sticky='s')
 
@@ -65,23 +59,11 @@ class App:
 
         self.data_frame = None
 
-    def __search(self):
-        programmatic_modification_of_txt = StringVar()
-        self.search.config(textvariable=programmatic_modification_of_txt)
-
-        def filter(*args):
-            query = programmatic_modification_of_txt.get()
-            print(f'searching for: {query}')
-
-        programmatic_modification_of_txt.trace('w', filter)
-        self.search.bind('<Return>', filter)
-
     def __searching(self):
         def filter(*args):
             self.list_box.delete(0, END)
             query = self.search.get()
             selected = self.dropdown_menu.get()
-            #selected = self.selected.get()
 
             self.data_frame = df
 
@@ -123,11 +105,8 @@ class App:
         output.close()
         webbrowser.open('output.txt')
 
-
-        #I fixed the it to update when new option is selected but have to use OptionMenu.
-
     def __update(self):
-        subprocess.run([r'C:\Windows\System32\notepad.exe', 'inventory.txt'])
+        subprocess.run([r'C:\Windows\System32\notepad.exe', r'data\inventory.txt'])
         global df
         df = read_data()
 
