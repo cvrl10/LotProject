@@ -50,7 +50,7 @@ class App:
 
         self.__searching()
         self.dropdown_menu.bind('<<ComboboxSelected>>', lambda _: (self.search.focus_set(), self.search.event_generate('<Return>')))
-        #s
+
         self.add_execute = Button(self.root, text='execute', command=lambda: self.__execute(), width=8)
         self.add_execute.grid(row=2, sticky='s')
 
@@ -79,7 +79,7 @@ class App:
                 self.list_box.insert(END, *intersection)
             else:
                 for lot in self.data_frame['standard'].unique():
-                    if lot.startswith(query):
+                    if lot.casefold().startswith(query.casefold()):
                         self.list_box.insert(END, lot)
 
         self.search.bind('<Return>', filter)
@@ -88,8 +88,7 @@ class App:
     def __execute(self):
         selected_indices = self.list_box.curselection()
         selected_lots = [self.list_box.get(i) for i in selected_indices]
-        print(selected_lots)
-        self.data_frame[self.data_frame['standard'].isin(selected_lots)].drop('expired', axis=1).to_csv('temp_data_frame.txt', index=False)
+        self.data_frame[self.data_frame['standard'].isin(selected_lots)].sort_values(by='standard').drop('expired', axis=1).to_csv('temp_data_frame.txt', index=False)
 
         f = open('temp_data_frame.txt', 'r')
         output = open('output.txt', 'w')

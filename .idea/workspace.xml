@@ -7,8 +7,9 @@
     <list default="true" id="2ae88d83-213f-469f-8100-eb480e08ff59" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/inventory.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/inventory.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory.csv" beforeDir="false" afterPath="$PROJECT_DIR$/inventory.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp_data_frame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/temp_data_frame.txt" afterDir="false" />
     </list>

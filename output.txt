@@ -1,4 +1,2 @@
-Ni lot: 26-77NIT exp: 2023-07-30
-Ni lot: 27-20NIT exp: 2024-10-30
-NO3 lot: 1305T96 exp: 2024-11-01
-Nd lot: 4309H55 exp: 2025-03-01
+Na lot: 27-159NAY exp: 2025-08-30
+Ni lot: 27-186NIT exp: 2026-02-28
